@@ -1,5 +1,5 @@
 body {
-    background: rgb(125, 198, 205);
+    background: rgb(0, 234, 255);
     color: rgb(45, 45, 45);
     padding: 10px;
     font-family: 'Times New Roman', Times, serif;
@@ -17,6 +17,7 @@ nav {
     display: flex;
     padding: 10px;
     justify-content: space-between;
+    border-radius: 20px;
 }
 
 h1 {
@@ -32,6 +33,7 @@ h1 {
     margin: 0;
     padding: 0;
     display: flex;
+    font-size: 30px;
 }
 
 .nav-li {
@@ -49,7 +51,7 @@ main {
     background: rgb(245, 238, 219);
     display: flex;
     margin-top: 15px;
-
+    border-radius: 20px;
 }
 
 .sidebar {
@@ -60,12 +62,13 @@ main {
 .sidebar-img {
     width: 250px;
     height: 300px; 
+    border-radius: 20px;
 }
 
 .content {
     flex: 1;
     padding: 4px;
-    font-family: fantasy
+    font-family: Georgia, 'Times New Roman', Times, serif
 }
 
 /* interests section styles */
@@ -73,6 +76,7 @@ main {
     border: 39px #A7C7E7 ridge;
     padding: 8px;
     margin-top: 20px;
+    border-radius: 20px;
 }
 
 h2, h3 {
@@ -91,17 +95,19 @@ h2, h3 {
 }
 
 #portfolio li {
-  background: #fff;
+  background: rgb(239, 80, 41);
   padding: 10px;
   border-radius: 10px;
   margin-bottom: 10px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: larger;
 }
 
 #portfolio li:hover {
-  background: #eee;
+  background: rgb(0, 234, 255);
 }
 
 #portfolio a {
   text-decoration: none;
-  color: #454545;
+  color: #fafafa;
 }
