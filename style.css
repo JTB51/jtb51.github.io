@@ -1,5 +1,6 @@
-body {
-    background: rgb(0, 234, 255);
+body { 
+    background-image: url(https://no-cdn.shortpixel.ai/client/to_avif,q_lossy,ret_wait/https://shortpixel.com/blog/wp-content/uploads/2023/12/nyan-cat.gif);
+    overflow: hidden;
     color: rgb(45, 45, 45);
     padding: 10px;
     font-family: 'Times New Roman', Times, serif;
@@ -18,6 +19,7 @@ nav {
     padding: 10px;
     justify-content: space-between;
     border-radius: 20px;
+    border: 3px solid black;
 }
 
 h1 {
@@ -48,11 +50,12 @@ a {
 
 /* main container area beneath menu */
 main {
-    background: rgb(245, 238, 219);
+    background: rgb(243, 230, 199);
     display: flex;
     margin-top: 25px;
     border-radius: 20px;
-    padding: 5px
+    padding: 5px;
+    border: 3px solid black;
 }
 
 .sidebar {
@@ -64,20 +67,22 @@ main {
     width: 250px;
     height: 300px; 
     border-radius: 20px;
+    border: 3px solid black;
 }
 
 .content {
     flex: 1;
-    padding: 4px;
-    font-family: Georgia, 'Times New Roman', Times, serif
+    padding: 10px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 /* interests section styles */
 #interests {
     border: 39px #A7C7E7 ridge;
     padding: 8px;
-    margin-top: 20px;
+    margin-top: 30px;
     border-radius: 20px;
+    border: 2px solid black;
 }
 
 h2, h3 {
@@ -102,6 +107,7 @@ h2, h3 {
   margin-bottom: 10px;
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: larger;
+  border: 2px solid black;
 }
 
 #portfolio li:hover {
