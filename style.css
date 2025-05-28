@@ -13,7 +13,7 @@ body {
 
 /* navigation menu */
 nav {
-    background: rgb(239, 80, 41);
+    background: #f6c49d
     margin-bottom: 20px;
     display: flex;
     padding: 10px;
@@ -111,7 +111,7 @@ h2, h3 {
 }
 
 #portfolio li:hover {
-  background: rgb(0, 234, 255);
+  background: #003366
 }
 
 #portfolio a {
