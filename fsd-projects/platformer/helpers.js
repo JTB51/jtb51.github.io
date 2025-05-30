@@ -100,7 +100,7 @@ function changeAnimationType() {
     if (Math.abs(player.speedX) > 0) {
       //if you're moving then change animation to walking or running
       if (keyPress.left || keyPress.right) {
-        currentAnimationType = animationTypes.run;
+        currentAnimationType = animationTypes.walk;
       } else {
         currentAnimationType = animationTypes.walk;
       }
@@ -254,6 +254,7 @@ function collision() {
     if (
       player.x + hitBoxWidth > platforms[i].x &&
       player.x < platforms[i].x + platforms[i].width &&
+
       player.y < platforms[i].y + platforms[i].height &&
       player.y + hitBoxHeight > platforms[i].y
     ) {

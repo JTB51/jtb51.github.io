@@ -3,8 +3,8 @@ body {
   background-image: url(https://art.ngfiles.com/images/3207000/3207340_701727_runicpixels_terraria-hell-biome-environmental-fanart.2972e7c02eea867a383f2516cdf81872.gif?f1713572829);
   background-size: contain;
   background-repeat:no-repeat;
+  background-color: black;
 }
-
 canvas {
   margin: 20px;
   object-fit: cover;
