@@ -45,6 +45,7 @@ $(function () {
     // TODO 3 - Create Collectables
     createCollectable("redbull", 225, 170, 2, 0); // on left 3
     createCollectable("redbull", 1125, 170, 2, 0); // on right 3
+    createCollectable("redbull", 675, 600, 2, 0); // on middle bottom
     createCollectable("redbull", 675, 300, 2, 0); // on middle 2
     createCollectable("redbull", 675, 120, 2, 0); // on middle 3
     // TODO 4 - Create Cannons
