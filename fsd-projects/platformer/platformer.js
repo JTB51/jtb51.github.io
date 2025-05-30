@@ -31,20 +31,27 @@ $(function () {
 
 
     // TODO 2 - Create Platforms
+    createPlatform(125,605,250,10,"white"); // left 1 
+    createPlatform(125,427.5,250,10,"white"); // left 2
+    createPlatform(125,250,250,10,"white"); // left 3
 
+    createPlatform(575,540,250,10, "white"); // middle 1
+    createPlatform(575,362.5,250,10, "white"); // middle 2
+    createPlatform(575,185,250,10, "white"); // middle 2
 
-
-
+    createPlatform(1025,605,250,10, "white"); // right 1
+    createPlatform(1025,427.5,250,10, "white"); // right 2
+    createPlatform(1025,250,250,10, "white"); // right 3
     // TODO 3 - Create Collectables
-
-
-
-    
+    createCollectable("redbull", 225, 170, 0, 0); // on left 3
+    createCollectable("redbull", 1125, 170, 0, 0); // on right 3
+    createCollectable("redbull", 675, 300, 0, 0); // on middle 2
+    createCollectable("redbull", 675, 120, 0, 0); // on middle 3
     // TODO 4 - Create Cannons
-
-
-    
-    
+    createCannon("top", 100, 800);
+    createCannon("top", 550, 800);
+    createCannon("top", 960, 800);
+    createCannon("top", 1400, 800);
     //////////////////////////////////
     // ONLY CHANGE ABOVE THIS POINT //
     //////////////////////////////////
