@@ -49,10 +49,10 @@ $(function () {
     createCollectable("redbull", 675, 300, 2, 0); // on middle 2
     createCollectable("redbull", 675, 120, 2, 0); // on middle 3
     // TODO 4 - Create Cannons
-    createCannon("top", 100, 700);
-    createCannon("top", 550, 700);
-    createCannon("top", 960, 700);
-    createCannon("top", 1400, 700);
+    createCannon("top", 100, 300);
+    createCannon("top", 550, 300);
+    createCannon("top", 960, 300);
+    createCannon("top", 1400, 300);
     //////////////////////////////////
     // ONLY CHANGE ABOVE THIS POINT //
     //////////////////////////////////
