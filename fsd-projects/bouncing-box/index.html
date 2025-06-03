@@ -55,6 +55,7 @@
 
             setInterval(update, 5);
             box.on('click', handleBoxClick);
+            board.on('click', handleBoardClick);
 
             function moveBoxTo(newPositionX, newPositionY) {
                 box.css({
@@ -72,6 +73,18 @@
             var points = 0;
             var speedX = 1;
             var speedY = 1;
+            var misclicks = 0;
+
+            function resetGame() {
+                points = 0;
+                misclicks = 0;
+                speedX = 1;
+                speedY = 1;
+                positionX = 0;
+                positionY = 100;
+                changeBoxText(points);
+                moveBoxTo(positionX, positionY);
+            }
 
             function update() {
                 positionX = positionX + speedX;
@@ -91,18 +104,22 @@
                 }
             }
 
-            function handleBoxClick() {
-                //math for random
+            function handleBoxClick(event) {
+                event.stopPropagation(); 
                 positionX = Math.random() * (boardWidth - box.width());
                 positionY = Math.random() * (boardHeight - box.height());
-				//add points
                 points++;
                 changeBoxText(points);
-				//increase speed
                 speedX = (1.05 * points + 0.1);
                 speedY = (1.05 * points + 0.1);
-				//reset position to random
                 moveBoxTo(positionX, positionY); 
+            }
+
+            function handleBoardClick() {
+                misclicks++;
+                if (misclicks >= 20) { // value for misclicks to reset game
+                    resetGame();
+                }
             }
         })();
     </script>
