@@ -1,8 +1,9 @@
-canvas {
-  background-image: url(https://www.thisiscolossal.com/wp-content/uploads/2024/01/spherewave.gif);
-  margin: 0px;
-  object-fit: contain;
-  background-size:cover;
-  background-repeat: no-repeat;
-  background-position: center;
+
+body {
+  background: url(https://www.thisiscolossal.com/wp-content/uploads/2024/01/spherewave.gif) no-repeat center center fixed;
+  background-color: #cccccc;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
