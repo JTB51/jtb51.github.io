@@ -14,7 +14,7 @@
         render();
         
         app.addResizeable(ground);
-        ground.y = (canvas.height-50);
+        ground.y = (canvas.height-10);
         app.view.addChild(ground);
         
         function render() {

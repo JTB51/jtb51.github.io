@@ -29,7 +29,7 @@ var background = function (window) {
         // ANIMATION VARIABLES HERE //////////////////////////////////////
         //////////////////////////////////////////////////////////////////
         // TODO (several):
-        var tree;
+        var car;
         var buildings = [];
         // called at the start of game and whenever the page is resized
         // add objects for display in background. draws each image added to the background once
@@ -39,10 +39,15 @@ var background = function (window) {
             // TODO 1:
             // this currently fills the background with an obnoxious yellow;
             // you should modify both the height and color to suit your game
-            var backgroundFill = draw.rect(canvasWidth,groundY,'black');
-            background.addChild(backgroundFill);
-            
-            // TODO 2: - Add a moon and starfield
+            var backgroundImage = new Image();
+            backgroundImage.src = "img/gamebackground.png";
+            backgroundImage.onload = function() {
+                var backgroundFill = new createjs.Bitmap(backgroundImage);               
+                backgroundFill.scaleX = app.canvas.width / backgroundImage.width;
+                backgroundFill.scaleY = groundY / backgroundImage.height;
+                background.addChildAt(backgroundFill, 0); 
+            };    
+            /* TODO 2: - Add a moon and starfield
             for(var i = 0; i < 250; i++){
                 var circle = draw.circle(3, "white", "LightGray", 2);
                 circle.x = canvasWidth * Math.random();
@@ -63,15 +68,15 @@ var background = function (window) {
                 building.x = 200 * i;
                 building.y = groundY - buildingHeight;
                 background.addChild(building);
-                buildings.push(building);
-} 
+                buildings.push(building); 
+} */
 
             
             // TODO 3: Part 1 - Add a tree
-            tree = draw.bitmap("img/tree.png");
-            tree.x = 0;
-            tree.y = groundY-225;
-            background.addChild(tree);            
+            car = draw.bitmap("img/car.png");
+            car.x = 0;
+            car.y = groundY-160;
+            background.addChild(car);            
             
         } // end of render function - DO NOT DELETE
         
@@ -84,11 +89,11 @@ var background = function (window) {
             var canvasHeight = app.canvas.height;
             var groundY = ground.y;
             
-            // TODO 3: Part 2 - Move the tree!
-            tree.x = tree.x -= 5;
+            // TODO 3: Part 2 - Move the tree! hah now its a car
+            car.x = car.x -= 20;
 
-            if (tree.x < -200){
-                tree.x = canvasWidth;
+            if (car.x < -2000){
+                car.x = canvasWidth + 500;
             }
             
             // TODO 4: Part 2 - Parallax
