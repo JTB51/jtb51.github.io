@@ -61,7 +61,7 @@ var runLevels = function (window) {
 
     function createReward(x, y, speed, image, offsetX, offsetY, scale){
       var reward = game.createGameItem("reward", 25);
-      var blueSquare = draw.bitmap("img/homerdonut.png");
+      var blueSquare = draw.bitmap(image);
       blueSquare.x = offsetX;
       blueSquare.y = offsetY;
       blueSquare.scaleX = scale;
@@ -131,11 +131,10 @@ var runLevels = function (window) {
       //////////////////////////////////////////////
       // DO NOT EDIT CODE BELOW HERE
       //////////////////////////////////////////////
-      if (++currentLevel === levelData.length) {
-        startLevel = () => {
-          console.log("Congratulations!");
-        };
-      }
+      currentLevel++;
+      if (currentLevel === levelData.length){
+          currentLevel = 0;
+      };
     }
     startLevel();
   };

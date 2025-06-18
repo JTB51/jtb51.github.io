@@ -29,9 +29,11 @@ var background = function (window) {
         // ANIMATION VARIABLES HERE //////////////////////////////////////
         //////////////////////////////////////////////////////////////////
         // TODO (several):
+        var jet;
         var car;
         var buildings = [];
-        // called at the start of game and whenever the page is resized
+        var bgImage1, bgImage2;
+               // called at the start of game and whenever the page is resized
         // add objects for display in background. draws each image added to the background once
         function render() {
             background.removeAllChildren();
@@ -39,14 +41,27 @@ var background = function (window) {
             // TODO 1:
             // this currently fills the background with an obnoxious yellow;
             // you should modify both the height and color to suit your game
-            var backgroundImage = new Image();
-            backgroundImage.src = "img/gamebackground.png";
-            backgroundImage.onload = function() {
-                var backgroundFill = new createjs.Bitmap(backgroundImage);               
-                backgroundFill.scaleX = app.canvas.width / backgroundImage.width;
-                backgroundFill.scaleY = groundY / backgroundImage.height;
-                background.addChildAt(backgroundFill, 0); 
-            };    
+            var backgroundImage = draw.bitmap("img/gamebackground.png");
+            bgImage1 = draw.bitmap("img/gamebackground.png");
+            bgImage2 = draw.bitmap("img/gamebackground.png");
+
+            // Position them side by side
+            bgImage1.x = 0;
+            bgImage1.y = 0;
+            bgImage2.x = app.canvas.width;
+            bgImage2.y = 0;
+
+            // Match height of ground
+            var scaleY = groundY / bgImage1.image.height;
+            var scaleX = app.canvas.width / bgImage1.image.width;
+            bgImage1.scaleX = scaleX;
+            bgImage1.scaleY = scaleY;
+            bgImage2.scaleX = scaleX;
+            bgImage2.scaleY = scaleY;
+
+            background.addChild(bgImage1);
+            background.addChild(bgImage2);
+
             /* TODO 2: - Add a moon and starfield
             for(var i = 0; i < 250; i++){
                 var circle = draw.circle(3, "white", "LightGray", 2);
@@ -76,7 +91,12 @@ var background = function (window) {
             car = draw.bitmap("img/car.png");
             car.x = 0;
             car.y = groundY-160;
-            background.addChild(car);            
+            background.addChild(car);      
+            
+            jet = draw.bitmap("img/jets.png");
+            jet.x = 0;
+            jet.y = groundY - 800;
+            background.addChild(jet);
             
         } // end of render function - DO NOT DELETE
         
@@ -88,12 +108,34 @@ var background = function (window) {
             var canvasWidth = app.canvas.width;
             var canvasHeight = app.canvas.height;
             var groundY = ground.y;
+
+
+            var scrollSpeed = 0.3;
+
+            if (bgImage1 && bgImage2) {
+                bgImage1.x -= scrollSpeed;
+                bgImage2.x -= scrollSpeed;
+
+                // When one background is off screen, move it to the right of the other
+                if (bgImage1.x + bgImage1.getBounds().width * bgImage1.scaleX <= 0) {
+                    bgImage1.x = bgImage2.x + bgImage2.getBounds().width * bgImage2.scaleX;
+                }
+                if (bgImage2.x + bgImage2.getBounds().width * bgImage2.scaleX <= 0) {
+                    bgImage2.x = bgImage1.x + bgImage1.getBounds().width * bgImage1.scaleX;
+                }
+            }
+
             
             // TODO 3: Part 2 - Move the tree! hah now its a car
-            car.x = car.x -= 20;
+            car.x = car.x -= 12;
+            jet.x = jet.x -= 20;
 
             if (car.x < -2000){
                 car.x = canvasWidth + 500;
+            }
+
+            if (jet.x < -3000){
+                jet.x = canvasWidth + 500;
             }
             
             // TODO 4: Part 2 - Parallax
