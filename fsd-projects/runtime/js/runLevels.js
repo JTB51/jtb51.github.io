@@ -49,7 +49,7 @@ var runLevels = function (window) {
       game.addGameItem(enemy);
       enemy.velocityX = speed; 
       enemy.onPlayerCollision = function () {
-          game.changeIntegrity(-10);
+          game.changeIntegrity(-30);
         };
       enemy.onProjectileCollision = function (){
           game.increaseScore(100);
@@ -93,7 +93,6 @@ var runLevels = function (window) {
       game.addGameItem(marker);
       marker.velocityX = speed; 
       marker.onPlayerCollision = function () {
-          game.changeIntegrity(50);
           marker.fadeOut();
           startLevel();
           };
