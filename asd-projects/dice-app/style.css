@@ -1,0 +1,17 @@
+#die {
+  height: 115px;
+  width: 115px;
+  background-color: lightgray; /* Feel free to customize */
+  position: relative;
+  border: 2px black solid;
+  border-radius: 10%;
+}
+#die2 {
+  height: 115px;
+  width: 115px;
+  background-color: lightgray; /* Feel free to customize */
+  position: relative;
+  top: 10px;
+  border: 2px black solid;
+  border-radius: 10%;
+}
