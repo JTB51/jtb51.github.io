@@ -415,7 +415,7 @@ Check: You should see a three-square snake in the middle of the board.
 
 ### ✅ **Check Your Work!**
 
-- Three green squares should appear on the board — these are the body segments of your snake. The head is a darker green square.
+- Three green squares should appear on the board — these are the body wsegments of your snake. The head is a darker green square.
 - If you refresh the page, they should appear in the same spot (head in row 10, column 10).
 - If nothing appears:
   - Confirm that `makeSnakeSquare()` is being called in `init()` three times.
