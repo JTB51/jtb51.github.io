@@ -4,6 +4,28 @@
 ///////////////////////// VARIABLE DECLARATIONS ////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+var colors = [
+  "#00F2FF",
+  "#00D4FF",
+  "#00B7FF",
+  "#0098FF",
+  "#007AFF",
+  "#005CFF",
+  "#0040FF",
+  "#0030E6",
+  "#0026CC",
+  "#0020B3",
+  "#0026CC",
+  "#0030E6",
+  "#0040FF",
+  "#005CFF",
+  "#007AFF",
+  "#0098FF",
+  "#00B7FF",
+  "#00D4FF"
+];
+var colorIndex = 0;
+
 // HTML jQuery Objects
 var board = $("#board");
 var scoreElement = $("#score");
@@ -20,8 +42,8 @@ const apple = {};
 const snake = {};
 
 // Constant Variables
-var ROWS = 33;
-var COLUMNS = 56;
+var ROWS = 32;
+var COLUMNS = 55;
 var SQUARE_SIZE = 20;
 var KEY = {
   LEFT: 37,
@@ -83,6 +105,7 @@ function update() {
 
   if (hasHitWall() || hasCollidedWithSnake()) {
     endGame();
+    colorIndex = 0; 
   }
 
   if (hasCollidedWithApple()) {
@@ -98,15 +121,31 @@ function checkForNewDirection(event) {
   BONUS: Only allow direction changes to take place if the new direction is
   perpendicular to the current direction
   */
-
-  if (activeKey === KEY.LEFT || activeKey === KEY.LEFT2) {
-    snake.head.direction = "left";
-  } else if (activeKey === KEY.RIGHT || activeKey === KEY.RIGHT2) {
-    snake.head.direction = "right";
-  } else if (activeKey === KEY.UP || activeKey === KEY.UP2) {
-    snake.head.direction = "up";
-  } else if (activeKey === KEY.DOWN || activeKey === KEY.DOWN2) {
-    snake.head.direction = "down";
+  switch(activeKey) {
+    case KEY.RIGHT:
+      if (snake.head.direction != "left") snake.head.direction = "right";
+      break;
+    case KEY.LEFT: 
+      if (snake.head.direction != "right") snake.head.direction = "left";
+      break;
+    case KEY.UP:
+      if (snake.head.direction != "down") snake.head.direction = "up";
+      break;
+    case KEY.DOWN:
+      if (snake.head.direction != "up") snake.head.direction = "down";
+      break;
+    case KEY.RIGHT2:
+      if (snake.head.direction != "left") snake.head.direction = "right";
+      break;
+    case KEY.LEFT2: 
+      if (snake.head.direction != "right") snake.head.direction = "left";
+      break;
+    case KEY.UP2:
+      if (snake.head.direction != "down") snake.head.direction = "up";
+      break;
+    case KEY.DOWN2:
+      if (snake.head.direction != "up") snake.head.direction = "down";
+      break;
   }
 
   // FILL IN THE REST
@@ -154,7 +193,7 @@ function moveBodyAToBodyB (bodyA, bodyB) {
   bodyA.column = bodyB.column;
   bodyA.direction = bodyB.direction;
 }
-console.log("Moving body A to body B...");
+//  console.log("Moving body A to body B...");
 setTimeout(() => {
   moveBodyAToBodyB(snake.body[1], snake.head);
   repositionSquare(snake.body[1]);
@@ -171,12 +210,12 @@ function hasHitWall() {
   */
   if (snake.head.row < -1) {
     return true;
-  } else if (snake.head.row > ROWS - 2) {
+  } else if (snake.head.row > ROWS - 1) {
     return true;
   }
   if (snake.head.column < -1) {
     return true;
-  } else if (snake.head.column > COLUMNS - 2) {
+  } else if (snake.head.column > COLUMNS - 1) {
     return true;
   }
 
@@ -222,6 +261,13 @@ function hasCollidedWithSnake() {
     head and each part of the snake's body also knows its own row and column.
   */
 
+  for (let i = 1; i < snake.body.length; i++) {
+    var bodySquare = snake.body[i];
+    if (snake.head.row === bodySquare.row && 
+      snake.head.column === bodySquare.column) {
+      return true; 
+    }
+  }
 
 
   return false;
@@ -282,6 +328,10 @@ function makeSnakeSquare(row, column) {
 
   snake.body.push(snakeSquare);
   snake.tail = snakeSquare;
+
+  snake.tail.element.css("backgroundColor", colors[colorIndex]);
+  colorIndex++;
+  colorIndex %= colors.length;
 }
 
 /* 
@@ -341,6 +391,15 @@ function getRandomAvailablePosition() {
     randomPosition.column = Math.floor(Math.random() * COLUMNS);
     randomPosition.row = Math.floor(Math.random() * ROWS);
     spaceIsAvailable = true;
+
+    for (var i = 0; i < snake.body.length; i++) {
+      var bodySquare = snake.body[i];
+      if (randomPosition.row === bodySquare.row && 
+        randomPosition.column === bodySquare.column) {
+          spaceIsAvailable = false;
+        }
+      }
+    
 
     /*
       TODO 14: After generating the random position determine if that position is

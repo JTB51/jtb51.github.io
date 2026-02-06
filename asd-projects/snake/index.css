@@ -48,6 +48,8 @@ body {
 }
 
 .apple {
+  background-image: url("../../Images/apple.png");
+  position: absolute; 
   background-color: red;
   z-index: 1;
 }
