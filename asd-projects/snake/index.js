@@ -84,7 +84,7 @@ function init() {
   makeApple();
 
   // TODO 6, Part 1: Initialize the interval
-  updateInterval = setInterval(update, 70);
+  updateInterval = setInterval(update, 100);
 
 }
 

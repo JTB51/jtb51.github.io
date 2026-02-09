@@ -1,6 +1,22 @@
 
 body {
-  background-color: darkgreen;
+  background-image: url(https://storage.ko-fi.com/cdn/useruploads/post/a73190c5-1724-4fc7-988e-d141445646d5_spiaggiapreview.gif);
+  background-size: cover;
+  background-position: top center; /* or bottom center, left center, etc. */
+  background-repeat: no-repeat;
+}
+
+#title {
+  color: white;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  font-size: 50px;
+    text-shadow:
+  /* -2px -2px 0 black, */
+  /* -2px 2px 0 black, */
+  /* 2px -2px 0 black, */
+   3px 3px 0 black 
 }
 
 #board {
@@ -20,6 +36,11 @@ body {
   top: 85%;
   font-size: 50px;
   font-family: "Courier New", Courier, monospace;
+  text-shadow:
+  /* -2px -2px 0 black, */
+  /* -2px 2px 0 black, */
+  /* 2px -2px 0 black, */
+   3px 3px 0 black 
 }
 
 #score {
@@ -48,8 +69,8 @@ body {
 }
 
 .apple {
-  background-image: url("../../Images/apple.png");
+  background-image: url("images/apple.png");
   position: absolute; 
-  background-color: red;
+  /* background-color: red; */
   z-index: 1;
 }
