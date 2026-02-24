@@ -4,6 +4,21 @@
     <title>Jeff's Website</title>
     <link rel="stylesheet" href="style.css"/>
     <link rel="icon" type="image/x-icon" href="Images/can">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+    <title> Music Player </title>
+    <style>
+      .music-player {
+        text-align: center;
+        margin: 20px;
+      }
+      button {
+        margin: 5px;
+        padding: 10px;
+        font-size: 16px;
+      }
+    </style>
   </head>
 
   <body>
@@ -28,7 +43,57 @@
           </li>
         </ul>
       </nav>
+      <div class= "music-player">
+        <h2> My Music Player </h2>
+        <audio id="audioPlayer" src=""></audio> <!--Audio element, no built in controls-->
+        <p id="trackTitle"> No track playing </p>
+        <button id = "prevBtn"> Previous </button>
+        <button id = "playPauseBtn"> Play </button>
+        <button id = "nextBtn"> Next </button>
+      </div>
 
-<audio controls>
-  <source src="mp3 files/Vicetone - Nevada (ft. Cozi Zuehlsdorff).mp3" type="audio/mpeg">
-</audio>
+      <script>
+        // InLine javascript logic
+        const audio = 
+          document.getElementById('audioplayer');
+        const prevBtn =
+          document.getElementById('prevBtn');
+        const playPauseBtn = 
+          document.getElementById('playPauseBtn');
+        const nextBtn = 
+          document.getElementById('nextBtn');
+        const trackTitle = 
+          document.getElementById('trackTitle');
+        // Playlist with array of track objects
+        const playlist = [
+          {title: "track 1", src: "mp3 files/Vicetone - Nevada (ft. Cozi Zuehlsdorff).mp3" }
+        ];
+
+        let currentTrack = 0;
+
+        function loadTrack(index){
+          audio.src = playlist[index].src;
+          trackTitle.textContent = playlist[index].title;
+          audio.play();
+          playPauseBtn.textContent = 'pause';
+        }
+
+        playPauseBtn.addEventListener('click', () => {
+          if(audio.paused) {
+            audio.play();
+            playPauseBtn.textContent = 'pause';
+          } else {
+            audio.pause();
+            playPauseBtn.textContent = 'play';
+          }
+        });
+        nextBtn.addEventListener('click', () => {
+          currentTrack = (currentTrack - 1 + playlist.length) % playlist.length; // Loop to end if at start
+          loadTrack(currentTrack);
+        });
+
+        // auto advance to next
+        audio.addEventListener('ended', () => {
+          nextBtn.click();
+        });
+      </script>
