@@ -123,5 +123,10 @@ h4 {
     text-decoration: black;
     color:black;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 20px;
+    font-size: 30px;
+    margin-top: 5px;
+}
+
+#bio {
+    font-size: 20px; 
 }
