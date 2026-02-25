@@ -130,3 +130,12 @@ h4 {
 #bio {
     font-size: 20px; 
 }
+
+#trackTitle {
+    color: white;
+    font-size: 20px;
+}
+
+.music-player {
+    color: black; 
+}

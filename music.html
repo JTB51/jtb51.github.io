@@ -52,48 +52,50 @@
         <button id = "nextBtn"> Next </button>
       </div>
 
-      <script>
-        // InLine javascript logic
-        const audio = 
-          document.getElementById('audioplayer');
-        const prevBtn =
-          document.getElementById('prevBtn');
-        const playPauseBtn = 
-          document.getElementById('playPauseBtn');
-        const nextBtn = 
-          document.getElementById('nextBtn');
-        const trackTitle = 
-          document.getElementById('trackTitle');
-        // Playlist with array of track objects
-        const playlist = [
-          {title: "track 1", src: "mp3 files/Vicetone - Nevada (ft. Cozi Zuehlsdorff).mp3" }
-        ];
+    <script>
+      const audio = document.getElementById('audioPlayer');
+      const prevBtn = document.getElementById('prevBtn');
+      const playPauseBtn = document.getElementById('playPauseBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const trackTitle = document.getElementById('trackTitle');
 
-        let currentTrack = 0;
+      const playlist = [
+        {title: "Nevada", src: "mp3 files/Vicetone - Nevada (ft. Cozi Zuehlsdorff).mp3"},
+        {title: "Shine", src: "/workspaces/jtb51.github.io/mp3 files/Spektrem - Shine Progressive House NCS - Copyright Free Music.mp3"}
+      ];
 
-        function loadTrack(index){
-          audio.src = playlist[index].src;
-          trackTitle.textContent = playlist[index].title;
+      let currentTrack = 0;
+
+      function loadTrack(index){
+        audio.src = playlist[index].src;
+        trackTitle.textContent = playlist[index].title;
+        audio.play();
+        playPauseBtn.textContent = 'Pause';
+      }
+
+      playPauseBtn.addEventListener('click', () => {
+        if(audio.paused) {
           audio.play();
-          playPauseBtn.textContent = 'pause';
+          playPauseBtn.textContent = 'Pause';
+        } else {
+          audio.pause();
+          playPauseBtn.textContent = 'Play';
         }
+      });
 
-        playPauseBtn.addEventListener('click', () => {
-          if(audio.paused) {
-            audio.play();
-            playPauseBtn.textContent = 'pause';
-          } else {
-            audio.pause();
-            playPauseBtn.textContent = 'play';
-          }
-        });
-        nextBtn.addEventListener('click', () => {
-          currentTrack = (currentTrack - 1 + playlist.length) % playlist.length; // Loop to end if at start
-          loadTrack(currentTrack);
-        });
+      nextBtn.addEventListener('click', () => {
+        currentTrack = (currentTrack + 1) % playlist.length;
+        loadTrack(currentTrack);
+      });
 
-        // auto advance to next
-        audio.addEventListener('ended', () => {
-          nextBtn.click();
-        });
-      </script>
+      prevBtn.addEventListener('click', () => {
+        currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+        loadTrack(currentTrack);
+      });
+
+      audio.addEventListener('ended', () => {
+        nextBtn.click();
+      });
+
+      loadTrack(currentTrack);
+    </script>
