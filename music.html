@@ -5,97 +5,188 @@
     <link rel="stylesheet" href="style.css"/>
     <link rel="icon" type="image/x-icon" href="Images/can">
     <meta charset="UTF-8">
-    <meta name="viewport"
-    content="width=device-width, initial-scale=1.0">
-    <title> Music Player </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
       .music-player {
         text-align: center;
         margin: 20px;
       }
+      #albumArt {
+        width: 250px;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        display: block;
+        margin: 10px auto;
+      }
+      #trackTitle {
+        font-weight: bold;
+        margin: -5px; 
+        font-family: sans-serif;
+      }
+
       button {
-        margin: 5px;
+        margin: 10px 5px 5px 5px; 
         padding: 10px;
         font-size: 16px;
+        border-radius: 10px; 
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .genre-container {
+        margin-top: 15px;
+        padding-top: 10px;
+        border-top: 1px solid #eee;
+      }
+
+      .genre-btn {
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        font-weight: bold;
+        min-width: 80px;
+      }
+
+      .genre-btn:hover {
+        background-color: #e2e6ea;
+      }
+
+      /* Optional: highlight the active genre button */
+      .active-genre {
+        background-color: #007bff !important;
+        color: white;
+        border-color: #0056b3;
       }
     </style>
   </head>
 
   <body>
-    <!-- All content goes here -->
     <div id="all-contents">
       <nav>
-        <h1>
-          Jeff's Amazing Website
-        </h1>
+        <h1>Jeff's Amazing Website</h1>
         <ul id="nav-ul">
-          <li class="nav-li">
-            <a href="index.html">Home</a>
-          </li>
-          <li class="nav-li">
-            <a href="portfolio.html">Portfolio</a>
-          </li>
-          <li class ="nav-li">
-            <a href="about_me.html">Bio</a>
-          </li>
-          <li class ="nav-li">
-            <a href="music.html">Music</a>
-          </li>
+          <li class="nav-li"><a href="index.html">Home</a></li>
+          <li class="nav-li"><a href="portfolio.html">Portfolio</a></li>
+          <li class="nav-li"><a href="about_me.html">Bio</a></li>
+          <li class="nav-li"><a href="music.html">Music</a></li>
         </ul>
       </nav>
-      <div class= "music-player">
+
+      <div class="music-player">
         <h2> My Music Player </h2>
-        <audio id="audioPlayer" src=""></audio> <!--Audio element, no built in controls-->
-        <p id="trackTitle"> No track playing </p>
-        <button id = "prevBtn"> Previous </button>
-        <button id = "playPauseBtn"> Play </button>
-        <button id = "nextBtn"> Next </button>
+        <audio id="audioPlayer" src=""></audio>
+        
+        <img id="albumArt" src="" alt="Album Cover">
+        <p id="trackTitle"></p>
+        
+        <div class="main-controls">
+          <button id="prevBtn"> ◁ </button>
+          <button id="playPauseBtn"> ▶︎ </button>
+          <button id="nextBtn"> ▷ </button>
+        </div>
+
+        <div class="genre-container">
+          <button class="genre-btn" id="edmBtn" onclick="changePlaylist('edm')">EDM</button>
+          <button class="genre-btn" id="rapBtn" onclick="changePlaylist('rap')">Rap</button>
+          <button class="genre-btn" id="popBtn" onclick="changePlaylist('pop')">Pop</button>
+        </div>
       </div>
+    </div>
 
     <script>
       const audio = document.getElementById('audioPlayer');
       const prevBtn = document.getElementById('prevBtn');
       const playPauseBtn = document.getElementById('playPauseBtn');
       const nextBtn = document.getElementById('nextBtn');
+      const albumArt = document.getElementById('albumArt');
       const trackTitle = document.getElementById('trackTitle');
 
-      const playlist = [
-        {title: "Nevada", src: "mp3 files/Vicetone - Nevada (ft. Cozi Zuehlsdorff).mp3"},
-        {title: "Shine", src: "/workspaces/jtb51.github.io/mp3 files/Spektrem - Shine Progressive House NCS - Copyright Free Music.mp3"}
-      ];
+      // Playlists organized by category
+      const playlists = {
+        edm: [
+          {title: "Nevada - Vicetone", src: "mp3/Vicetone - Nevada (ft. Cozi Zuehlsdorff).mp3", img: "album/nevada.jpg"},
+          {title: "Shine - Spektrem", src: "mp3/Spektrem - Shine Progressive House NCS - Copyright Free Music.mp3", img: "album/ncs.jpg"}
+        ],
+        rap: [
+          {title: "Two Tone - TheKidSZN", src: "mp3/THEKIDSZN - TWOTONE (OFFICIAL LYRIC VIDEO).mp3", img: "album/twotone.jpg"}
+        ],
+        pop: [
+          {title: "Hell & Back - Kid Ink", src: "mp3/Kid Ink - Hell & Back [Official Video] 4.mp3", img: "album/hellandback.jpg"},
+          {title: "Dreaming - Smallpools", src: "mp3/Smallpools - Dreaming (Official Video) 4.mp3", img: "album/dreaming.jpg"}
+        ]
+      };
 
-      let currentTrack = 0;
+      const genreOrder = ['edm', 'rap', 'pop'];
+      let currentGenreIndex = 0;
+      let currentTrackIndex = 0;
 
-      function loadTrack(index){
-        audio.src = playlist[index].src;
-        trackTitle.textContent = playlist[index].title;
-        audio.play();
-        playPauseBtn.textContent = 'Pause';
+      function loadTrack(gIdx, tIdx, shouldPlay = true) {
+        const genre = genreOrder[gIdx];
+        const track = playlists[genre][tIdx];
+        
+        audio.src = track.src;
+        albumArt.src = track.img;
+        albumArt.alt = track.title;
+        trackTitle.textContent = track.title;
+
+        // Update active button styling
+        document.querySelectorAll('.genre-btn').forEach(btn => btn.classList.remove('active-genre'));
+        document.getElementById(genre + 'Btn').classList.add('active-genre');
+        
+        if (shouldPlay) {
+          audio.play().catch(e => console.log("Playback interaction required"));
+          playPauseBtn.textContent = "❚❚";
+        }
+      }
+
+      function changePlaylist(genreName) {
+        currentGenreIndex = genreOrder.indexOf(genreName);
+        currentTrackIndex = 0;
+        loadTrack(currentGenreIndex, currentTrackIndex);
       }
 
       playPauseBtn.addEventListener('click', () => {
-        if(audio.paused) {
+        if (audio.paused) {
           audio.play();
-          playPauseBtn.textContent = 'Pause';
+          playPauseBtn.textContent = "❚❚";
         } else {
           audio.pause();
-          playPauseBtn.textContent = 'Play';
+          playPauseBtn.textContent = "▶︎";
         }
       });
 
       nextBtn.addEventListener('click', () => {
-        currentTrack = (currentTrack + 1) % playlist.length;
-        loadTrack(currentTrack);
+        currentTrackIndex++;
+        
+        // If we reach the end of the current playlist, move to the next genre
+        if (currentTrackIndex >= playlists[genreOrder[currentGenreIndex]].length) {
+          currentTrackIndex = 0;
+          currentGenreIndex = (currentGenreIndex + 1) % genreOrder.length; 
+        }
+        
+        loadTrack(currentGenreIndex, currentTrackIndex);
       });
 
       prevBtn.addEventListener('click', () => {
-        currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
-        loadTrack(currentTrack);
+        currentTrackIndex--;
+        
+        // If we go before the start, go to the end of the previous genre
+        if (currentTrackIndex < 0) {
+          currentGenreIndex = (currentGenreIndex - 1 + genreOrder.length) % genreOrder.length;
+          currentTrackIndex = playlists[genreOrder[currentGenreIndex]].length - 1;
+        }
+        
+        loadTrack(currentGenreIndex, currentTrackIndex);
       });
 
+      // Automatically play next song (and move to next playlist if needed)
       audio.addEventListener('ended', () => {
         nextBtn.click();
       });
 
-      loadTrack(currentTrack);
+      // Initial setup: load first song of EDM but don't autoplay until user clicks
+      loadTrack(currentGenreIndex, currentTrackIndex, false);
     </script>
+  </body>
+</html>

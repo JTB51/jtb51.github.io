@@ -139,3 +139,15 @@ h4 {
 .music-player {
     color: black; 
 }
+
+#prevBtn {
+    width: 100px;
+}
+
+#nextBtn {
+    width: 100px;
+}
+
+#playPauseBtn {
+    width: 100px;
+}

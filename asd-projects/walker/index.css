@@ -9,6 +9,7 @@ body {
   border: 1px solid white;
   background-color: black;
   position: relative;
+  margin: 80px auto 0 auto; 
 }
 
 #walker {
@@ -18,4 +19,18 @@ body {
   position: absolute;
 /*   left: 100px; */  /* Uncomment if you want to set a "starting" position */
 /*   top: 100px;  */  /* Uncomment if you want to set a "starting" position */
+}
+
+.player {
+    width: 50px;
+  height: 50px;
+  position: absolute;
+}
+
+#player1 {
+  background-color: teal;
+}
+
+#player2 {
+  background-color: rgb(255,0,179)
 }

@@ -10,17 +10,38 @@ function runProgram(){
   // Constant Variables
   var FRAME_RATE = 60;
   var FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
+  const BOARD_WIDTH = $("#board").width();
+  const BOARD_HEIGHT = $("#board").height();
+  const PLAYER_WIDTH = $(".player").width();
+  const PLAYER_HEIGHT = $(".player").height();
+
   const KEY = {
     LEFT: 37,
     UP: 38,
     RIGHT: 39,
     DOWN: 40,
     ENTER: 13,
+
+    A: 65,
+    W: 87,
+    S: 83, 
+    D: 68,
+
+    SPACE: 32
   }
   // Game Item Objects
-  let walker = {
+  let player1 = {
+    id: "#player1",
     x: 0,
     y: 0,
+    speedX: 0,
+    speedY: 0
+  }
+  
+  let player2 = {
+    id: "#player2",
+    x: BOARD_WIDTH - PLAYER_WIDTH,
+    y: BOARD_HEIGHT - PLAYER_HEIGHT,
     speedX: 0,
     speedY: 0
   }
@@ -46,11 +67,30 @@ function runProgram(){
   by calling this function and executing the code inside.
   */
   function newFrame() {
-    repositionGameItem();
-    wallCollision();
-    redrawGameItem();
+    repositionGameItem(player1)
+    repositionGameItem(player2);
+    wallCollision(player1);
+    wallCollision(player2);
+    redrawGameItem(player1);
+    redrawGameItem(player2);
+    
+    if (doCollide(player1, player2)){
+      var randomColor = "#000000".replace(/0/g, function () {
+      return (~~(Math.random() * 16)).toString(16);
+      });
+
+      $("body").css("background-color", randomColor);
+    }
   }
   
+
+  function colorChange(player) {
+    var randomColor = "#000000".replace(/0/g, function () {
+      return (~~(Math.random() * 16)).toString(16);
+    });
+
+    $(player.id).css("background-color", randomColor);
+  }
   /* 
   This section is where you set up the event handlers for user input.
   For example, if you wanted to make an event handler for a click event, you should rename this function to 'handleClick', then write the code that should execute when the click event occurs.
@@ -59,52 +99,86 @@ function runProgram(){
   */
   function handleKeyDown(event) {
       if (event.which === KEY.LEFT) {
-        walker.speedX = -5;
-        walker.speedY = 0;
+        player2.speedX = -5;
+        player2.speedY = 0;
     } else if (event.which === KEY.UP) {
-        walker.speedY = -5;
-        walker.speedX = 0;
+        player2.speedY = -5;
+        player2.speedX = 0;
     } else if (event.which === KEY.RIGHT) {
-        walker.speedX = 5;
-        walker.speedY = 0;
+        player2.speedX = 5;
+        player2.speedY = 0;
     } else if (event.which === KEY.DOWN) {
-        walker.speedY = 5;
-        walker.speedX = 0;
+        player2.speedY = 5;
+        player2.speedX = 0;
+    }
+      if (event.which === KEY.A) {
+        player1.speedX = -5;
+        player1.speedY = 0;
+    } else if (event.which === KEY.W) {
+        player1.speedY = -5;
+        player1.speedX = 0;
+    } else if (event.which === KEY.D) {
+        player1.speedX = 5;
+        player1.speedY = 0;
+    } else if (event.which === KEY.S) {
+        player1.speedY = 5;
+        player1.speedX = 0;
+    }
+
+    if(event.which === KEY.SPACE) {
+      colorChange(player1);
+      colorChange(player2);
     }
   }
 
 
   function handleKeyUp (){
+    if(event.which === KEY.A || event.which === KEY.D) {
+      player1.speedX = 0;
+    } else if (event.which === KEY.W || event.which === KEY.S) {
+      player1.speedY = 0;
+    }
+
     if(event.which === KEY.LEFT || event.which === KEY.RIGHT) {
-      walker.speedX = 0;
+      player2.speedX = 0;
     } else if (event.which === KEY.UP || event.which === KEY.DOWN) {
-      walker.speedY = 0;
+      player2.speedY = 0;
     }
   }
   ////////////////////////////////////////////////////////////////////////////////
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
-  function repositionGameItem(){
-    walker.x += walker.speedX;
-    walker.y += walker.speedY;
+  function repositionGameItem(player){
+    player.x += player.speedX;
+    player.y += player.speedY;
+
   }
 
-  function redrawGameItem(){
-    $("#walker").css("left", walker.x);
-    $("#walker").css("top", walker.y);
+  function redrawGameItem(player){
+    $(player.id).css("left", player.x);
+    $(player.id).css("top", player.y);
   }
 
-  function wallCollision(){
-    if (walker.x > $("#board").width() - $("#walker").width()){
-      walker.x -= walker.speedX
-    } else if (walker.x < 0) {
-      walker.x -= walker.speedX;
-    } else if (walker.y > $("#board").height() - $("#walker").height()){
-      walker.y -= walker.speedY;
-    } else if (walker.y < 0) {
-      walker.y -= walker.speedY;
+  function wallCollision(player){
+    if (player.x > BOARD_WIDTH - PLAYER_WIDTH){
+      player.x -= player.speedX
+    } else if (player.x < 0) {
+      player.x -= player.speedX;
+    } else if (player.y > BOARD_HEIGHT - PLAYER_HEIGHT){
+      player.y -= player.speedY;
+    } else if (player.y < 0) {
+      player.y -= player.speedY;
     }
+  }
+
+  function doCollide(a, b) {
+    return (
+      a.x < b.x + PLAYER_WIDTH && 
+      a.x + PLAYER_WIDTH > b.x &&
+      a.y < b.y + PLAYER_HEIGHT &&
+      a.y + PLAYER_HEIGHT > b.y 
+    )
   }
 
   function endGame() {
