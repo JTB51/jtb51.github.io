@@ -151,3 +151,8 @@ h4 {
 #playPauseBtn {
     width: 100px;
 }
+
+#title {
+    color: white;
+    font-size: 30px;
+}
