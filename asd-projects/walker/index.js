@@ -75,11 +75,19 @@ function runProgram(){
     redrawGameItem(player2);
     
     if (doCollide(player1, player2)){
-      var randomColor = "#000000".replace(/0/g, function () {
-      return (~~(Math.random() * 16)).toString(16);
-      });
+      console.log("You're it!"); // collision log
 
+      // Change background color
+      var randomColor = "#000000".replace(/0/g, function () {
+        return (~~(Math.random() * 16)).toString(16);
+      });
       $("body").css("background-color", randomColor);
+
+      // Show the Disco Party text
+      $("#collision-text").show();
+    } else {
+      // Hide the text when not colliding
+      $("#collision-text").hide();
     }
   }
   

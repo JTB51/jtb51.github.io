@@ -34,3 +34,13 @@ body {
 #player2 {
   background-color: rgb(255,0,179)
 }
+
+#collision-text {
+  text-align: center;
+  font-family: fantasy;
+  font-size: 32px;
+  color: yellow;
+  margin-top: 20px;
+  display: none; /* hidden by default */
+  text-shadow: 2px 2px 5px orange;
+}
