@@ -131,28 +131,3 @@ h4 {
     font-size: 20px; 
 }
 
-#trackTitle {
-    color: white;
-    font-size: 20px;
-}
-
-.music-player {
-    color: black; 
-}
-
-#prevBtn {
-    width: 100px;
-}
-
-#nextBtn {
-    width: 100px;
-}
-
-#playPauseBtn {
-    width: 100px;
-}
-
-#title {
-    color: white;
-    font-size: 30px;
-}
