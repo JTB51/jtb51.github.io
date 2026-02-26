@@ -8,6 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <style>
+      body {
+        color: white;
+      }
+
       .music-player {
         text-align: center;
         margin: 20px;
@@ -61,12 +65,58 @@
         border-color: #0056b3;
       }
 
-      .volume-container {
-        margin-top: 8px;
+      /* Controls container: progress + main controls + volume */
+      .controls-container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        gap: 20px;
+        margin-top: 15px;
       }
 
-      #volumeSlider {
-        width: 220px;
+      .progress-container, .volume-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .progress-container label, .volume-container label {
+        color: white;
+        font-size: 16px;
+        margin-bottom: 6px; /* slightly above the bar */
+      }
+
+      #timeDisplay {
+        font-size: 16px;
+        color: white;
+        margin-bottom: 6px; /* slightly above the bar */
+        font-family: sans-serif;
+      }
+
+      #progressBar, #volumeSlider {
+        width: 150px;
+        height: 10px;
+        cursor: pointer;
+        -webkit-appearance: none;
+        border-radius: 5px;
+        background: linear-gradient(to right, #007bff 0%, #007bff 0%, #555 0%, #555 100%);
+      }
+
+      #progressBar::-webkit-slider-thumb, #volumeSlider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 16px;
+        height: 16px;
+        background: #fff;
+        border-radius: 50%;
+        cursor: pointer;
+        margin-top: -3px;
+      }
+
+      #progressBar::-moz-range-thumb, #volumeSlider::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        background: #fff;
+        border-radius: 50%;
         cursor: pointer;
       }
 
@@ -90,6 +140,7 @@
         transition: background 0.2s;
         font-family: sans-serif;
         font-size: 14px;
+        color: black;
       }
 
       .song-item:hover {
@@ -100,64 +151,66 @@
         background-color: #007bff;
         color: white;
       }
+
+      .song-item.active-song:hover {
+        background-color: #007bff;
+        color: white;
+      }
+
+      #volumeText {
+        font-size: 20px;  /* bigger font */
+        color: white;
+        margin-bottom: 6px;
+      }
     </style>
   </head>
 
   <body>
-    <div id="all-contents"> 
+    <div id="all-contents">
       <nav>
-         <h1>Jeff's Amazing Website</h1> 
-         <ul id="nav-ul"> 
-          <li class="nav-li">
-            <a href="index.html">Home</a>
-          </li> <li class="nav-li">
-            <a href="portfolio.html">Portfolio</a>
-          </li> 
-          <li class="nav-li">
-            <a href="about_me.html">Bio</a>
-          </li> 
-          <li class="nav-li">
-            <a href="music.html">Music</a>
-          </li> 
-        </ul> 
+        <h1>Jeff's Amazing Website</h1>
+        <ul id="nav-ul">
+          <li class="nav-li"><a href="index.html"> Home </a></li>
+          <li class="nav-li"><a href="portfolio.html"> Portfolio </a></li>
+          <li class="nav-li"><a href="about_me.html"> Bio </a></li>
+          <li class="nav-li"><a href="music.html"> Music </a></li>
+        </ul>
       </nav>
-    <div class="music-player">
-      <h2 id = "title">Music Player</h2>
-      <audio id="audioPlayer"></audio>
 
-      <img id="albumArt" />
-      <p id="trackTitle"></p>
+      <div class="music-player">
+        <h2 id="title"> Music Player </h2>
+        <audio id="audioPlayer"></audio>
 
-      <div class="main-controls">
-        <button id="prevBtn">◁</button>
-        <button id="playPauseBtn">▶︎</button>
-        <button id="nextBtn">▷</button>
+        <img id="albumArt" />
+        <p id="trackTitle"></p>
+
+        <!-- Controls with progress and volume -->
+        <div class="controls-container">
+          <div class="progress-container">
+            <div id="timeDisplay">0:00 / 0:00</div>
+            <input type="range" id="progressBar" min="0" max="100" step="0.1" value="0" />
+          </div>
+
+          <div class="main-controls">
+            <button id="prevBtn">◁</button>
+            <button id="playPauseBtn">▶︎</button>
+            <button id="nextBtn">▷</button>
+          </div>
+
+          <div class="volume-container">
+            <label id = "volumeText"> Volume </label>
+            <input type="range" id="volumeSlider" min="0" max="100" step="1" value="50" />
+          </div>
+        </div>
+
+        <div class="genre-container">
+          <button class="genre-btn" id="edmBtn" onclick="changePlaylist('edm')">EDM</button>
+          <button class="genre-btn" id="rapBtn" onclick="changePlaylist('rap')">Rap</button>
+          <button class="genre-btn" id="popBtn" onclick="changePlaylist('pop')">Pop</button>
+        </div>
+
+        <div class="song-list-container" id="songList"></div>
       </div>
-
-      <div class="volume-container">
-        <input
-          type="range"
-          id="volumeSlider"
-          min="0"
-          max="1"
-          step="0.01"
-          value="1"
-        />
-      </div>
-
-      <div class="genre-container">
-        <button class="genre-btn" id="edmBtn" onclick="changePlaylist('edm')">
-          EDM
-        </button>
-        <button class="genre-btn" id="rapBtn" onclick="changePlaylist('rap')">
-          Rap
-        </button>
-        <button class="genre-btn" id="popBtn" onclick="changePlaylist('pop')">
-          Pop
-        </button>
-      </div>
-
-      <div class="song-list-container" id="songList"></div>
     </div>
 
     <script>
@@ -169,53 +222,31 @@
       const trackTitle = document.getElementById("trackTitle");
       const volumeSlider = document.getElementById("volumeSlider");
       const songList = document.getElementById("songList");
+      const progressBar = document.getElementById("progressBar");
+      const timeDisplay = document.getElementById("timeDisplay");
 
       const playlists = {
         edm: [
-          {
-            title: "Nevada - Vicetone",
-            src: "mp3/Vicetone - Nevada (ft. Cozi Zuehlsdorff).mp3",
-            img: "album/nevada.jpg",
-          },
-          {
-            title: "Shine - Spektrem",
-            src: "mp3/Spektrem - Shine Progressive House NCS.mp3",
-            img: "album/ncs.jpg",
-          },
-          {
-            title: "Heroes Tonight - Janji",
-            src: "mp3/Janji - Heroes Tonight.mp3",
-            img: "album/heroestonight.jpg",
-          },
+          { title: "Nevada - Vicetone", src: "mp3/Nevada.mp3", img: "album/nevada.jpg" },
+          { title: "Shine - Spektrem", src: "mp3/Shine.mp3", img: "album/ncs.jpg" },
+          { title: "Heroes Tonight - Janji", src: "mp3/HT.mp3", img: "album/heroestonight.jpg" },
         ],
         rap: [
-          {
-            title: "Two Tone - TheKidSZN",
-            src: "mp3/THEKIDSZN - TWOTONE.mp3",
-            img: "album/twotone.jpg",
-          },
-          {
-            title: "I'll Be Fine - JuiceWRLD",
-            src: "mp3/Juice WRLD - I'll Be Fine.mp3",
-            img: "album/gbgr.jpg",
-          },
+          { title: "Two Tone - TheKidSZN", src: "mp3/TwoTone.mp3", img: "album/twotone.jpg" },
+          { title: "I'll Be Fine - JuiceWRLD", src: "mp3/IBF.mp3", img: "album/gbgr.jpg" },
         ],
         pop: [
-          {
-            title: "Hell & Back - Kid Ink",
-            src: "mp3/Hell & Back.mp3",
-            img: "album/hellandback.jpg",
-          },
+          { title: "Hell & Back - Kid Ink", src: "mp3/H&B.mp3", img: "album/hellandback.jpg" },
           { title: "Dreaming - Smallpools", src: "mp3/Dreaming.mp3", img: "album/dreaming.jpg" },
           { title: "Appalachia - glaive", src: "mp3/Appalachia.mp3", img: "album/yall.jpg" },
-          { title: "Crying, Laughing, Loving, Lying - glaive", src: "mp3/Crying, Laughing, Loving, Lying.mp3", img: "album/yall.jpg" },
+          { title: "Crying, Laughing, Loving, Lying - glaive", src: "mp3/CLLL.mp3", img: "album/yall.jpg" },
           { title: "Foreigner - glaive", src: "mp3/Foreigner.mp3", img: "album/yall.jpg" },
-          { title: "i love you and it sounds stupid - glaive", src: "mp3/i love you and it sounds stupid.mp3", img: "album/yall.jpg" },
-          { title: "It Is What It Is - glaive", src: "mp3/It Is What It Is.mp3", img: "album/yall.jpg" },
+          { title: "i love you and it sounds stupid - glaive", src: "mp3/ILY.mp3", img: "album/yall.jpg" },
+          { title: "It Is What It Is - glaive", src: "mp3/IIWII.mp3", img: "album/yall.jpg" },
           { title: "Modafinil - glaive", src: "mp3/Modafinil.mp3", img: "album/yall.jpg" },
-          { title: "Nouveau Riche - glaive", src: "mp3/Nouveau Riche.mp3", img: "album/yall.jpg" },
-          { title: "Veni Vidi Vici - glaive", src: "mp3/Veni Vidi Vici.mp3", img: "album/yall.jpg" },
-          { title: "We Don't Leave the House - glaive", src: "mp3/We Don't Leave the House.mp3", img: "album/yall.jpg" },
+          { title: "Nouveau Riche - glaive", src: "mp3/NR.mp3", img: "album/yall.jpg" },
+          { title: "Veni Vidi Vici - glaive", src: "mp3/VVV.mp3", img: "album/yall.jpg" },
+          { title: "We Don't Leave the House - glaive", src: "mp3/WDLTH.mp3", img: "album/yall.jpg" },
         ],
       };
 
@@ -226,21 +257,15 @@
       function renderSongList() {
         const genre = genreOrder[currentGenreIndex];
         songList.innerHTML = "";
-
         playlists[genre].forEach((track, index) => {
           const div = document.createElement("div");
           div.classList.add("song-item");
           div.textContent = track.title;
-
-          if (index === currentTrackIndex) {
-            div.classList.add("active-song");
-          }
-
+          if (index === currentTrackIndex) div.classList.add("active-song");
           div.addEventListener("click", () => {
             currentTrackIndex = index;
             loadTrack(currentGenreIndex, currentTrackIndex);
           });
-
           songList.appendChild(div);
         });
       }
@@ -248,12 +273,10 @@
       function loadTrack(gIdx, tIdx, shouldPlay = true) {
         const genre = genreOrder[gIdx];
         const track = playlists[genre][tIdx];
-
         audio.src = track.src;
         albumArt.src = track.img;
         trackTitle.textContent = track.title;
 
-        // Update active genre button
         document.querySelectorAll(".genre-btn").forEach((btn) =>
           btn.classList.remove("active-genre")
         );
@@ -285,10 +308,7 @@
 
       nextBtn.addEventListener("click", () => {
         currentTrackIndex++;
-        if (
-          currentTrackIndex >=
-          playlists[genreOrder[currentGenreIndex]].length
-        ) {
+        if (currentTrackIndex >= playlists[genreOrder[currentGenreIndex]].length) {
           currentTrackIndex = 0;
           currentGenreIndex = (currentGenreIndex + 1) % genreOrder.length;
         }
@@ -298,23 +318,48 @@
       prevBtn.addEventListener("click", () => {
         currentTrackIndex--;
         if (currentTrackIndex < 0) {
-          currentGenreIndex =
-            (currentGenreIndex - 1 + genreOrder.length) % genreOrder.length;
-          currentTrackIndex =
-            playlists[genreOrder[currentGenreIndex]].length - 1;
+          currentGenreIndex = (currentGenreIndex - 1 + genreOrder.length) % genreOrder.length;
+          currentTrackIndex = playlists[genreOrder[currentGenreIndex]].length - 1;
         }
         loadTrack(currentGenreIndex, currentTrackIndex);
       });
 
+      // Volume slider input: nonlinear scaling for smoother control
       volumeSlider.addEventListener("input", () => {
-        audio.volume = volumeSlider.value;
+        // Map slider 0-100 to a logarithmic volume curve
+        const linearValue = volumeSlider.value / 100; // 0-1
+        // logarithmic approximation (perceived volume)
+        audio.volume = Math.pow(linearValue, 2); // squaring makes low values quieter, high values less harsh
+        updateSliderBackground(volumeSlider);
       });
+
+      // Progress bar update
+      audio.addEventListener("timeupdate", () => {
+        const percent = (audio.currentTime / audio.duration) * 100 || 0;
+        progressBar.value = percent;
+        updateSliderBackground(progressBar);
+
+        const formatTime = (t) => `${Math.floor(t / 60)}:${Math.floor(t % 60).toString().padStart(2, "0")}`;
+        timeDisplay.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration || 0)}`;
+      });
+
+      progressBar.addEventListener("input", () => {
+        audio.currentTime = (progressBar.value / 100) * audio.duration;
+        updateSliderBackground(progressBar);
+      });
+
+      function updateSliderBackground(slider) {
+        const val = slider.value;
+        slider.style.background = `linear-gradient(to right, #007bff 0%, #007bff ${val}%, #555 ${val}%, #555 100%)`;
+      }
 
       audio.addEventListener("ended", () => {
         nextBtn.click();
       });
 
       loadTrack(currentGenreIndex, currentTrackIndex, false);
+      updateSliderBackground(volumeSlider);
+      updateSliderBackground(progressBar);
     </script>
   </body>
 </html>
