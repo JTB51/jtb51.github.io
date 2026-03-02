@@ -66,6 +66,13 @@ function runProgram(){
   On each "tick" of the timer, a new frame is dynamically drawn using JavaScript
   by calling this function and executing the code inside.
   */
+
+/* Every frame that is dictated by setinterval is updated by these function calls, which are helper functions
+  These calls include repositioning the character based on movenets, detecting boundaries (wall),
+  and then redrawing these objects once it is found that they are in correct positions
+  Also, this function is what creates disco party. 
+*/
+
   function newFrame() {
     repositionGameItem(player1)
     repositionGameItem(player2);
@@ -92,6 +99,7 @@ function runProgram(){
   }
   
 
+// changes color of squares if player hits the space bar 
   function colorChange(player) {
     var randomColor = "#000000".replace(/0/g, function () {
       return (~~(Math.random() * 16)).toString(16);
@@ -105,6 +113,7 @@ function runProgram(){
   
   Note: You can have multiple event handlers for different types of events.
   */
+ // changes character position when a key is pressed and direction itmust go 
   function handleKeyDown(event) {
       if (event.which === KEY.LEFT) {
         player2.speedX = -5;
@@ -139,7 +148,7 @@ function runProgram(){
     }
   }
 
-
+  // makes it to where when player lifts the key, the player stops moving and stops until a new key is pressed
   function handleKeyUp (){
     if(event.which === KEY.A || event.which === KEY.D) {
       player1.speedX = 0;
@@ -157,17 +166,21 @@ function runProgram(){
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
+
+  // this is what moves the character if a key is pressed 
   function repositionGameItem(player){
     player.x += player.speedX;
     player.y += player.speedY;
 
   }
 
+  // this is what visually displays character movement
   function redrawGameItem(player){
     $(player.id).css("left", player.x);
     $(player.id).css("top", player.y);
   }
 
+  // detects when player crosses or touches border boundary and thus restricts further movement 
   function wallCollision(player){
     if (player.x > BOARD_WIDTH - PLAYER_WIDTH){
       player.x -= player.speedX
@@ -180,6 +193,7 @@ function runProgram(){
     }
   }
 
+  // this is what dictates if the two players are touching each other 
   function doCollide(a, b) {
     return (
       a.x < b.x + PLAYER_WIDTH && 
