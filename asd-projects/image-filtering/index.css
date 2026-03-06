@@ -1,6 +1,6 @@
 .square {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   position: absolute;
 }
 
@@ -10,7 +10,8 @@ body > div {
 
 #button-box {
   position: relative;
-  top: 350px;
+  top: 10px;
+  left: 43%;
 }
 
 button {
@@ -25,4 +26,13 @@ button {
 
 #reset {
   background: red;
+}
+
+#display {
+  width: 560px;
+  height: 680px;
+  border: 1px solid rgb(64, 10, 10);
+  background-color: rgb(150,150,150);
+  position: relative;
+  margin: 80px auto 0 auto; 
 }
