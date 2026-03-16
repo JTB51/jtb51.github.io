@@ -233,6 +233,7 @@
           <button class="genre-btn" id="edmBtn" onclick="changePlaylist('edm')">EDM</button>
           <button class="genre-btn" id="rapBtn" onclick="changePlaylist('rap')">Rap</button>
           <button class="genre-btn" id="popBtn" onclick="changePlaylist('pop')">Pop</button>
+          <button class="genre-btn" id="rockBtn" onclick="changePlaylist('rock')">Rock</button>
         </div>
 
         <div class="song-list-container" id="songList"></div>
@@ -296,11 +297,13 @@
           { title: "heavydirtysoul - twenty one pilots", src: "mp3/HDS.mp3", img: "album/blurryface.jpg"},
           { title: "No Angels - Bastille (Feat. Ella Eyre)", src: "mp3/NA.mp3", img: "album/noangels.jpg"},
           { title: "Sail - Awolnation", src: "mp3/Sail.mp3", img: "album/sail.jpg"},
-
         ],
+        rock: [
+          { title: "I Ran (So Far Away) - Flock of Seagulls", src: "mp3/IR.mp3", img: "album/iran.jpg"},
+        ]
       };
 
-      const genreOrder = ["edm", "rap", "pop"];
+      const genreOrder = ["edm", "rap", "pop", "rock"];
       let currentGenreIndex = 0;
       let currentTrackIndex = 0;
 
