@@ -26,24 +26,22 @@ function runProgram(){
     ENTER: 13,
   }
   // Game Item Objects
-
-    let player1 = {
-    id: "#player1",
-    x: 0,
-    y: 0,
-    speedX: 0,
-    speedY: 0
+  function GameItem (id, x, y, speedX, speedY){
+    var gameItem = {};
+    gameItem.id = id;
+    gameItem.x = x;
+    gameItem.y = y;
+    gameItem.speedX = speedX;
+    gameItem.speedY = speedY;
+    gameItem.width = $(id).width();
+    gameItem.height = $(id).height(); 
+    return gameItem; 
   }
-  
-  let player2 = {
-    id: "#player2",
-    x: BOARD_WIDTH - PLAYER_WIDTH,
-    y: BOARD_HEIGHT - PLAYER_HEIGHT,
-    speedX: 0,
-    speedY: 0
-  }
-  
 
+  let player1 = GameItem("#player1", 0, 0, 0, 0);
+  let player2 = GameItem("#player2", BOARD_WIDTH - PLAYER_WIDTH, BOARD_HEIGHT - PLAYER_HEIGHT, 0, 0);
+  let ball = GameItem("#ball", BOARD_WIDTH / 2, BOARD_HEIGHT / 2, (Math.random() > 0.5 ? -3 : 3), (Math.random() > 0.5 ? -3 : 3));
+  
   // one-time setup
   let interval = setInterval(newFrame, FRAMES_PER_SECOND_INTERVAL);   // execute newFrame every 0.0166 seconds (60 Frames per second)
   $(document).on('keydown', handleKeyDown);
@@ -58,6 +56,9 @@ function runProgram(){
   by calling this function and executing the code inside.
   */
   function newFrame() {
+    moveObject(ball);
+    moveObject(paddleLeft);
+    moveObject(paddleRight);
     
 
   }
@@ -65,14 +66,6 @@ function runProgram(){
   /* 
   Called in response to events.
   */
-  function handleEvent(event) {
-
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////
-
   function handleKeyDown(event) {
     if (event.which === KEY.UP) {
         player2.speedY = -5;
@@ -98,6 +91,17 @@ function runProgram(){
     if (event.which === KEY.UP || event.which === KEY.DOWN) {
       player2.speedY = 0;
     }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
+
+  function moveObject(obj) {
+    obj.x += obj.speedX;
+    obj.y += obj.speedY;
+    $(obj.id).css("left", obj.x);
+    $(obj.id).css("top", obj.y);
   }
   
   function endGame() {
