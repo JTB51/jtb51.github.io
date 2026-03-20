@@ -17,7 +17,7 @@ body {
 
 #paddleLeft {
   background-color: white;
-  width: 20px;
+  width: 12px;
   height: 15%;
   border-radius: 20px;
   position: absolute;
@@ -27,7 +27,7 @@ body {
 
 #paddleRight {
   background-color: white;
-  width: 20px;
+  width: 12px;
   height: 15%;
   border-radius: 20px;
   position: absolute;

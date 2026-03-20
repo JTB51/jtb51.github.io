@@ -38,8 +38,8 @@ function runProgram(){
     return gameItem; 
   }
 
-  let player1 = GameItem("#player1", 0, 0, 0, 0);
-  let player2 = GameItem("#player2", BOARD_WIDTH - PLAYER_WIDTH, BOARD_HEIGHT - PLAYER_HEIGHT, 0, 0);
+  let paddleLeft = GameItem("#player1", 0, 0, 0, 0);
+  let paddleRight = GameItem("#player2", BOARD_WIDTH - PLAYER_WIDTH, BOARD_HEIGHT - PLAYER_HEIGHT, 0, 0);
   let ball = GameItem("#ball", BOARD_WIDTH / 2, BOARD_HEIGHT / 2, (Math.random() > 0.5 ? -3 : 3), (Math.random() > 0.5 ? -3 : 3));
   
   // one-time setup
@@ -59,8 +59,7 @@ function runProgram(){
     moveObject(ball);
     moveObject(paddleLeft);
     moveObject(paddleRight);
-    
-
+    wallCollision(ball);
   }
   
   /* 
@@ -68,34 +67,43 @@ function runProgram(){
   */
   function handleKeyDown(event) {
     if (event.which === KEY.UP) {
-        player2.speedY = -5;
-        player2.speedX = 0;
+        paddleRight.speedY = -5;
     } else if (event.which === KEY.DOWN) {
-        player2.speedY = 5;
-        player2.speedX = 0;
+        paddleRight.speedY = 5;
     }
     if (event.which === KEY.W) {
-        player1.speedY = -5;
-        player1.speedX = 0;
+        paddleLeft.speedY = -5;
     } else if (event.which === KEY.S) {
-        player1.speedY = 5;
-        player1.speedX = 0;
+        paddleLeft.speedY = 5;
     }
   }
 
-  function handleKeyUp (){
+  function handleKeyUp (event){
     if (event.which === KEY.W || event.which === KEY.S) {
-      player1.speedY = 0;
+      paddleLeft.speedY = 0;
     }
 
     if (event.which === KEY.UP || event.which === KEY.DOWN) {
-      player2.speedY = 0;
+      paddleRight.speedY = 0;
     }
   }
 
   ////////////////////////////////////////////////////////////////////////////////
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
+
+  function wallCollision (obj) {
+    if (obj.x < 0) {
+      obj.speedX = -obj.speedX;
+    } else if (obj.x > BOARD_WIDTH - obj.width) {
+      obj.speedX = -obj.speedX;
+    }
+    if (obj.y < 0) {
+      obj.speedY = -obj.speedY;
+    } else if (obj.y > BOARD_HEIGHT - obj.height) {
+      obj.speedY = -obj.speedY;
+    }
+  }
 
   function moveObject(obj) {
     obj.x += obj.speedX;
