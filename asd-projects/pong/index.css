@@ -15,24 +15,22 @@ body {
   transform: translate(-50%, -50%);
 }
 
-#paddleLeft {
+
+.paddle {
   background-color: white;
   width: 12px;
   height: 15%;
   border-radius: 20px;
   position: absolute;
   top: 100px;
+}
+
+#paddleLeft {
   left: 5px;
 }
 
 #paddleRight {
-  background-color: white;
-  width: 12px;
-  height: 15%;
-  border-radius: 20px;
-  position: absolute;
-  top: 100px;
-  right: 5px;
+  right: 5px; 
 }
 
 #ball {
@@ -55,3 +53,4 @@ body {
   font-size: 75px; 
   left: 50%; 
 }
+

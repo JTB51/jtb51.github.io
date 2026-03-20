@@ -12,8 +12,8 @@ function runProgram(){
   const FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
   const BOARD_WIDTH = $("#board").width();
   const BOARD_HEIGHT = $("#board").height();
-  const PLAYER_WIDTH = $(".player").width();
-  const PLAYER_HEIGHT = $(".player").height();
+  const PLAYER_WIDTH = $(".paddle").width();
+  const PLAYER_HEIGHT = $(".paddle").height();
   
   const KEY = {
     UP: 38, // right player 
@@ -38,8 +38,8 @@ function runProgram(){
     return gameItem; 
   }
 
-  let paddleLeft = GameItem("#player1", 0, 0, 0, 0);
-  let paddleRight = GameItem("#player2", BOARD_WIDTH - PLAYER_WIDTH, BOARD_HEIGHT - PLAYER_HEIGHT, 0, 0);
+  let paddleLeft = GameItem("#paddleLeft", 5, 0, 0, 0);
+  let paddleRight = GameItem("#paddleRight", BOARD_WIDTH - PLAYER_WIDTH - 5, BOARD_HEIGHT - PLAYER_HEIGHT, 0, 0);
   let ball = GameItem("#ball", BOARD_WIDTH / 2, BOARD_HEIGHT / 2, (Math.random() > 0.5 ? -3 : 3), (Math.random() > 0.5 ? -3 : 3));
   
   // one-time setup
@@ -60,6 +60,10 @@ function runProgram(){
     moveObject(paddleLeft);
     moveObject(paddleRight);
     wallCollision(ball);
+    wallCollision(paddleLeft);
+    wallCollision(paddleRight);
+    doCollide(paddleRight, ball);
+    doCollide(paddleLeft, ball);
   }
   
   /* 
@@ -92,16 +96,29 @@ function runProgram(){
   ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
+  function doCollide (paddle, ball) {
+  }
+
   function wallCollision (obj) {
-    if (obj.x < 0) {
-      obj.speedX = -obj.speedX;
-    } else if (obj.x > BOARD_WIDTH - obj.width) {
-      obj.speedX = -obj.speedX;
+    if (obj === paddleLeft || obj === paddleRight) {
+      if (obj.y < 10) {
+        obj.y = 5; 
+      } else if (obj.y > BOARD_HEIGHT - obj.height - 10) {
+        obj.y = BOARD_HEIGHT - obj.height - 5; 
+      }
     }
-    if (obj.y < 0) {
-      obj.speedY = -obj.speedY;
-    } else if (obj.y > BOARD_HEIGHT - obj.height) {
-      obj.speedY = -obj.speedY;
+
+    if (obj === ball) {
+      if (obj.x < 0) {
+        obj.speedX = -obj.speedX;
+      } else if (obj.x > BOARD_WIDTH - obj.width) {
+        obj.speedX = -obj.speedX;
+      }
+      if (obj.y < 0) {
+        obj.speedY = -obj.speedY;
+      } else if (obj.y > BOARD_HEIGHT - obj.height) {
+        obj.speedY = -obj.speedY;
+      }
     }
   }
 
