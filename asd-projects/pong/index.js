@@ -71,10 +71,23 @@ function runProgram(){
     $(".score-right").hide();
   };
 
+  function initGame() {
+      $("#ball").show();
+      $("#paddleLeft").show();
+      $("#paddleRight").show();
+      $("#score1").show();
+      $("#score2").show();
+      $("#divider").show();
+      $(".score-left").show();
+      $(".score-right").show();
+      gameActive = true; 
+  }
+
   function newFrame() {
     if (!gameActive) {
       startMenu(); 
     } else if (gameActive) {
+      initGame();
       moveObject(ball);
       moveObject(paddleLeft);
       moveObject(paddleRight);
@@ -88,8 +101,7 @@ function runProgram(){
   
   function handleKeyDown(event) {
     if (event.which === KEY.SPACE && !gameActive) {
-      gameActive = true; 
-      console.log(gameActive);
+      initGame();
     }
     if (event.which === KEY.UP) {
         paddleRight.speedY = -10;
@@ -127,7 +139,7 @@ function runProgram(){
     if (obj2 === ball) {  
       // Randomize Y speed
       obj2.speedY = Math.random() * 11; 
-      // Spee dup the X speed 
+      // Speed up the X speed 
       obj2.speedX *= Math.random() * (1.5-1.1) + 1.1; 
     }
     return true; 
