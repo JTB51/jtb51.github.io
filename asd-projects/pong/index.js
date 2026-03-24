@@ -1,12 +1,11 @@
 /* global $, sessionStorage */
 
 $(document).ready(runProgram); // wait for the HTML / CSS elements of the page to fully load, then execute runProgram()
-  
+
 function runProgram(){
   ////////////////////////////////////////////////////////////////////////////////
   //////////////////////////// SETUP /////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
-  var started = false; 
   // Constant Variables
   const FRAME_RATE = 60;
   const FRAMES_PER_SECOND_INTERVAL = 1000 / FRAME_RATE;
@@ -45,6 +44,8 @@ function runProgram(){
     return gameItem; 
   }
 
+  startMenu();
+
   let paddleLeft = GameItem("#paddleLeft", 5, 0, 0, 0);
   let paddleRight = GameItem("#paddleRight", BOARD_WIDTH - PLAYER_WIDTH - 5, BOARD_HEIGHT - PLAYER_HEIGHT, 0, 0);
   let ball = GameItem("#ball", BOARD_WIDTH / 2, BOARD_HEIGHT / 2, (Math.random() > 0.5 ? -BASE_BALL_SPEED : BASE_BALL_SPEED), (Math.random() > 0.5 ? -BASE_BALL_SPEED : BASE_BALL_SPEED));
@@ -72,31 +73,30 @@ function runProgram(){
   };
 
   function initGame() {
-      $("#ball").show();
-      $("#paddleLeft").show();
-      $("#paddleRight").show();
-      $("#score1").show();
-      $("#score2").show();
-      $("#divider").show();
-      $(".score-left").show();
-      $(".score-right").show();
-      gameActive = true; 
+    $(".welcome").hide();
+    $("#ball").show();
+    $("#paddleLeft").show();
+    $("#paddleRight").show();
+    $("#score1").show();
+    $("#score2").show();
+    $("#divider").show();
+    $(".score-left").show();
+    $(".score-right").show();
+    gameActive = true; 
   }
 
   function newFrame() {
     if (!gameActive) {
-      startMenu(); 
-    } else if (gameActive) {
-      initGame();
-      moveObject(ball);
-      moveObject(paddleLeft);
-      moveObject(paddleRight);
-      wallCollision(ball);
-      wallCollision(paddleLeft);
-      wallCollision(paddleRight);
-      doCollide(paddleRight, ball);
-      doCollide(paddleLeft, ball);
-    }
+      return;
+    } 
+    moveObject(ball);
+    moveObject(paddleLeft);
+    moveObject(paddleRight);
+    wallCollision(ball);
+    wallCollision(paddleLeft);
+    wallCollision(paddleRight);
+    doCollide(paddleRight, ball);
+    doCollide(paddleLeft, ball);
   }
   
   function handleKeyDown(event) {
@@ -140,7 +140,7 @@ function runProgram(){
       // Randomize Y speed
       obj2.speedY = Math.random() * 11; 
       // Speed up the X speed 
-      obj2.speedX *= Math.random() * (1.5-1.1) + 1.1; 
+      obj2.speedX *= -1.1; 
     }
     return true; 
   } else {
