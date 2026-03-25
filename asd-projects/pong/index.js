@@ -85,13 +85,15 @@ function runProgram(){
     $(".score-right").show();
     gameActive = true; 
     gameOver = false; 
+    resetBall();
     leftScore = 0;
     rightScore = 0;
+    updateScoreDisplay();
   }
 
   function endGameWinner(direction) {
     gameActive = false; 
-    gameOver = true; 
+    
     $("#paddleRight").hide();
     $("#paddleLeft").hide();
     $("#ball").hide();
@@ -181,7 +183,7 @@ function runProgram(){
         // Ball went off left side - right player scores
         rightScore++;
         updateScoreDisplay();
-        if (rightScore >= 1) {
+        if (rightScore >= 10) {
           endGameWinner("RIGHT");
           gameOver = true;
         } else {
@@ -191,7 +193,7 @@ function runProgram(){
         // Ball went off right side - left player scores
         leftScore++;
         updateScoreDisplay();
-        if (leftScore >= 1) {
+        if (leftScore >= 10) {
           endGameWinner("LEFT");
           gameOver = true;
         } else {
