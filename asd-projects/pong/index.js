@@ -28,6 +28,7 @@ function runProgram(){
   
   // Game variables
   let gameActive = false;
+  let gameOver = false; 
   let leftScore = 0;
   let rightScore = 0;
   
@@ -83,6 +84,24 @@ function runProgram(){
     $(".score-left").show();
     $(".score-right").show();
     gameActive = true; 
+    gameOver = false; 
+    leftScore = 0;
+    rightScore = 0;
+  }
+
+  function endGameWinner(direction) {
+    gameActive = false; 
+    gameOver = true; 
+    $("#paddleRight").hide();
+    $("#paddleLeft").hide();
+    $("#ball").hide();
+    $("#score1").hide();
+    $("#score2").hide();
+    $("#divider").hide();
+    $(".score-left").hide();
+    $(".score-right").hide();
+    $(".welcome").show().text("The " + direction + " side has won the game!").css("height", "67%");
+    $("#start").show().text("Please press Space to play again!").css("top", "380px");
   }
 
   function newFrame() {
@@ -100,7 +119,7 @@ function runProgram(){
   }
   
   function handleKeyDown(event) {
-    if (event.which === KEY.SPACE && !gameActive) {
+    if (event.which === KEY.SPACE && !gameActive || event.which === KEY.SPACE && gameOver === true) {
       initGame();
     }
     if (event.which === KEY.UP) {
@@ -162,8 +181,9 @@ function runProgram(){
         // Ball went off left side - right player scores
         rightScore++;
         updateScoreDisplay();
-        if (rightScore >= 10) {
-          endGameWithWinner("right");
+        if (rightScore >= 1) {
+          endGameWinner("RIGHT");
+          gameOver = true;
         } else {
           resetBall();
         }
@@ -171,8 +191,9 @@ function runProgram(){
         // Ball went off right side - left player scores
         leftScore++;
         updateScoreDisplay();
-        if (leftScore >= 7) {
-          endGameWithWinner("left");
+        if (leftScore >= 1) {
+          endGameWinner("LEFT");
+          gameOver = true;
         } else {
           resetBall();
         }
