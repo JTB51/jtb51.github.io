@@ -33,6 +33,8 @@ function runProgram(){
   let rightScore = 0;
   let maxSpeed = 12;
   let speedIncrement = -1.2; 
+  let paddleSpeed = 10; 
+  let winningScore = 10;
   
   // Game Item Objects
   function GameItem (id, x, y, speedX, speedY){
@@ -64,7 +66,7 @@ function runProgram(){
   ///////////////////////// CORE LOGIC ///////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////
 
-  function startMenu () {
+  function startMenu () { 
     $("#paddleRight").hide();
     $("#paddleLeft").hide();
     $("#ball").hide();
@@ -93,8 +95,8 @@ function runProgram(){
     updateScoreDisplay();
   }
 
-  function endGameWinner(direction) {
-    gameActive = false; 
+  function endGameWinner(direction) { // when the game ends (when a score reaches 10), it changes gameActive to false, hides the game items, and then shows the winner text
+    gameActive = false;  
     
     $("#paddleRight").hide();
     $("#paddleLeft").hide();
@@ -108,7 +110,7 @@ function runProgram(){
     $("#start").show().text("Please press Space to play again!").css("top", "380px");
   }
 
-  function newFrame() {
+  function newFrame() { // if the game is not active, then it just returns so that nothing happens, otherwise it begins the game and starts to draw the objects as they are moved by their respective helper funcs. 
     if (!gameActive) {
       return;
     } 
@@ -122,24 +124,24 @@ function runProgram(){
     doCollide(paddleLeft, ball);
   }
   
-  function handleKeyDown(event) {
+  function handleKeyDown(event) { // when player presses certain keys, movement begins dependent on the key
     if (event.which === KEY.SPACE && !gameActive || event.which === KEY.SPACE && gameOver === true) {
       initGame();
     }
     if (event.which === KEY.UP) {
-        paddleRight.speedY = -10; // google says this is a magic number but i dont think it is, its the pixel speed to which i want paddles to move
-    } else if (event.which === KEY.DOWN) { // for each direction, so i know there here but idk how to change them so i left them
-        paddleRight.speedY = 10;
+        paddleRight.speedY = -paddleSpeed; 
+    } else if (event.which === KEY.DOWN) { 
+        paddleRight.speedY = paddleSpeed;
     }
     if (event.which === KEY.W) {
-        paddleLeft.speedY = -10;
+        paddleLeft.speedY = -paddleSpeed;
     } else if (event.which === KEY.S) {
-        paddleLeft.speedY = 10;
+        paddleLeft.speedY = paddleSpeed;
     }
   }
 
-  function handleKeyUp (event){
-    if (event.which === KEY.W || event.which === KEY.S) { // same thing as i said above ^^
+  function handleKeyUp (event){ // when player releases the key they pressed, movement stops 
+    if (event.which === KEY.W || event.which === KEY.S) { 
       paddleLeft.speedY = 0;
     }
 
@@ -153,7 +155,7 @@ function runProgram(){
   ////////////////////////////////////////////////////////////////////////////////
 
 
-  function doCollide (obj1, obj2) {
+  function doCollide (obj1, obj2) { // if the balls x and ys are the same as the paddle then it is observed as a collission and causes it to change direction and speed up 
   if (obj1.x < obj2.x + obj2.width &&
       obj1.x + obj1.width > obj2.x &&
       obj1.y < obj2.y + obj2.height &&
@@ -175,7 +177,7 @@ function runProgram(){
 
   function wallCollision (obj) {
     if (obj === paddleLeft || obj === paddleRight) { 
-      if (obj.y < 10) { // if the object is a paddle, check if it goes off the board
+      if (obj.y < 10) { // if the object is a paddle, check if it goes off the board and it gives a slight bit of padding, I KNOW THEY ARE MAGIC NUMBERS BUT ITS PADDING I SWEAR
         obj.y = 5; 
       } else if (obj.y > BOARD_HEIGHT - obj.height - 10) {
         obj.y = BOARD_HEIGHT - obj.height - 5; 
@@ -187,7 +189,7 @@ function runProgram(){
         // Ball went off left side - right player scores
         rightScore++;
         updateScoreDisplay();
-        if (rightScore >= 10) {
+        if (rightScore >= winningScore) {
           endGameWinner("RIGHT");
           gameOver = true;
         } else {
@@ -197,7 +199,7 @@ function runProgram(){
         // Ball went off right side - left player scores
         leftScore++;
         updateScoreDisplay();
-        if (leftScore >= 10) {
+        if (leftScore >= winningScore) {
           endGameWinner("LEFT");
           gameOver = true;
         } else {
@@ -207,21 +209,21 @@ function runProgram(){
       
       if (obj.y < 0) { // if the ball hits the top / bottom of the board, it bounces back at the same y speed just opposite
         obj.speedY = -obj.speedY;
-      } else if (obj.y > BOARD_HEIGHT - obj.height) {
+      } else if (obj.y > BOARD_HEIGHT - obj.height) { 
         obj.speedY = -obj.speedY;
       }
     }
   }
 
   function moveObject(obj) { // moves an object based on its speed per frame 
-    obj.x += obj.speedX;
+    obj.x += obj.speedX; 
     obj.y += obj.speedY;
     $(obj.id).css("left", obj.x);
     $(obj.id).css("top", obj.y);
   }
 
   
-  function updateScoreDisplay() {
+  function updateScoreDisplay() { 
     $("#leftScore").text(leftScore);
     $("#rightScore").text(rightScore);
   }
