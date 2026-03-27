@@ -31,6 +31,7 @@ function runProgram(){
   let gameOver = false; 
   let leftScore = 0;
   let rightScore = 0;
+  let maxSpeed = 15;
   
   // Game Item Objects
   function GameItem (id, x, y, speedX, speedY){
@@ -158,10 +159,12 @@ function runProgram(){
       obj1.y + obj1.height > obj2.y) {
     
     if (obj2 === ball) {  
-      // Randomize Y speed
+      // Randomize Y speed so less variability 
       obj2.speedY = Math.random() * 11; 
-      // Speed up the X speed 
-      obj2.speedX *= -1.1; 
+      // Speed up the X speed per hit
+      if (obj2.speedX <= maxSpeed) {
+        obj2.speedX *= 1.2;
+      }
     }
     return true; 
   } else {
@@ -170,8 +173,8 @@ function runProgram(){
 }
 
   function wallCollision (obj) {
-    if (obj === paddleLeft || obj === paddleRight) {
-      if (obj.y < 10) {
+    if (obj === paddleLeft || obj === paddleRight) { 
+      if (obj.y < 10) { // if the object is a paddle, check if it goes off the board
         obj.y = 5; 
       } else if (obj.y > BOARD_HEIGHT - obj.height - 10) {
         obj.y = BOARD_HEIGHT - obj.height - 5; 
@@ -201,7 +204,7 @@ function runProgram(){
         }
       }
       
-      if (obj.y < 0) {
+      if (obj.y < 0) { // if the ball hits the top / bottom of the board, it bounces back at the same y speed just opposite
         obj.speedY = -obj.speedY;
       } else if (obj.y > BOARD_HEIGHT - obj.height) {
         obj.speedY = -obj.speedY;
@@ -209,7 +212,7 @@ function runProgram(){
     }
   }
 
-  function moveObject(obj) {
+  function moveObject(obj) { // moves an object based on its speed per frame 
     obj.x += obj.speedX;
     obj.y += obj.speedY;
     $(obj.id).css("left", obj.x);
@@ -222,16 +225,16 @@ function runProgram(){
     $("#rightScore").text(rightScore);
   }
   
-  function resetBall() {
+  function resetBall() { 
     ball.x = BOARD_WIDTH / 2;
     ball.y = BOARD_HEIGHT / 2;
-    ball.speedX = (Math.random() > 0.5 ? -BASE_BALL_SPEED : BASE_BALL_SPEED);
+    ball.speedX = (Math.random() > 0.5 ? -BASE_BALL_SPEED : BASE_BALL_SPEED); // when the ball resets randomize the direction and speed it goes at the paddles per new turn 
     ball.speedY = (Math.random() > 0.5 ? -BASE_BALL_SPEED : BASE_BALL_SPEED);
     $(ball.id).css("left", ball.x);
     $(ball.id).css("top", ball.y);
   }
   
-  function endGame() {
+  function endGame() { // i know its not declared anywhere but if i delete it the program breaks 
     clearInterval(interval);
     $(document).off();
   }
