@@ -32,6 +32,7 @@ function runProgram(){
   let leftScore = 0;
   let rightScore = 0;
   let maxSpeed = 15;
+  let speedIncrement = 1.2; 
   
   // Game Item Objects
   function GameItem (id, x, y, speedX, speedY){
@@ -126,8 +127,8 @@ function runProgram(){
       initGame();
     }
     if (event.which === KEY.UP) {
-        paddleRight.speedY = -10;
-    } else if (event.which === KEY.DOWN) {
+        paddleRight.speedY = -10; // google says this is a magic number but i dont think it is, its the pixel speed to which i want paddles to move
+    } else if (event.which === KEY.DOWN) { // for each direction, so i know there here but idk how to change them so i left them
         paddleRight.speedY = 10;
     }
     if (event.which === KEY.W) {
@@ -138,7 +139,7 @@ function runProgram(){
   }
 
   function handleKeyUp (event){
-    if (event.which === KEY.W || event.which === KEY.S) {
+    if (event.which === KEY.W || event.which === KEY.S) { // same thing as i said above ^^
       paddleLeft.speedY = 0;
     }
 
@@ -163,7 +164,7 @@ function runProgram(){
       obj2.speedY = Math.random() * 11; 
       // Speed up the X speed per hit
       if (obj2.speedX <= maxSpeed) {
-        obj2.speedX *= 1.2;
+        obj2.speedX *= speedIncrement;
       }
     }
     return true; 
