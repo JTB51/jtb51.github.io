@@ -31,8 +31,8 @@ function runProgram(){
   let gameOver = false; 
   let leftScore = 0;
   let rightScore = 0;
-  let maxSpeed = 15;
-  let speedIncrement = 1.2; 
+  let maxSpeed = 12;
+  let speedIncrement = -1.2; 
   
   // Game Item Objects
   function GameItem (id, x, y, speedX, speedY){
