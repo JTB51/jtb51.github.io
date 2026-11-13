@@ -1,51 +1,132 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Jeff's Website</title>
-    <link rel="stylesheet" href="style.css"/>
-    <link rel="icon" type="image/x-icon" href="Images/can">
-  </head>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="JT Burgoyne — mechanical engineering student at Louisiana State University.">
+  <meta name="theme-color" content="#08111f">
+  <title>JT Burgoyne | Mechanical Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="projects.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
-  <body>
-    <!-- All content goes here -->
-    <div id="all-contents">
-      <nav>
-        <h1>
-          Jeff's Amazing Website
-        </h1>
-        <ul id="nav-ul">
-          <li class="nav-li">
-            <a href="index.html">Home</a>
-          </li>
-          <li class="nav-li">
-            <a href="portfolio.html">Portfolio</a>
-          </li>
-          <li class ="nav-li">
-            <a href="about_me.html">Bio</a>
-          </li>
-        </ul>
-      </nav>
-      <main>
-        <!--Sidebar Section-->
-        <div class="sidebar">
-          <img class="sidebar-img" src="Images/goat.jpg" alt="Me" width="300" height="300">
+  <header class="site-header">
+    <nav class="nav container" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="JT Burgoyne, home">JT BURGOYNE<span>.</span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links">
+        <span class="sr-only">Open navigation</span>
+        <span aria-hidden="true">☰</span>
+      </button>
+      <div class="nav-links" id="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a class="projects-nav-link" href="#projects" hidden>Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="hero container" id="home">
+      <div class="hero-copy">
+        <p class="eyebrow">Mechanical Engineering · LSU</p>
+        <h1>Driven by curiosity.<br><span>Built for innovation.</span></h1>
+        <p class="hero-description">I’m JT Burgoyne, a mechanical engineering student at Louisiana State University interested in design, prototyping, aerospace, motorsport, and the technology that pushes boundaries.</p>
+        <div class="button-row">
+          <a class="button button-primary" href="#about">Learn about me</a>
+          <a class="button button-secondary" href="#contact">Get in touch</a>
         </div>
-        
-        <!--Content Section-->
-        <div class="content">
-          <h2> Jeffrey Burgoyne </h2>
-          <p> LSU Commit </p>
-          <p class="pong"> <a href="asd-projects/pong/"> The best game I made, PONG! (click here) </a> <p>
-          <div id="interests">
-            <h3> Interests </h3>
-            <ul> 
-              <li> Watching Formula 1 </li>
-              <li> Playing Videogames </li>
-              <li> Streaming on Twitch</li>
-            </ul>
+        <p class="hero-note">CAD · Prototyping · Mechanical Design · Testing</p>
+      </div>
+
+      <!-- HEADSHOT LATER:
+        1. Add assets/images/headshot.jpg
+        2. Replace the placeholder div below with:
+           <img class="headshot" src="assets/images/headshot.jpg" alt="JT Burgoyne">
+      -->
+      <div class="portrait-frame" aria-label="Professional headshot will be added later">
+        <span>JT</span>
+        <small>Headshot coming later</small>
+      </div>
+    </section>
+
+    <section class="section section-tinted" id="about">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Background</p>
+          <h2>About me<span>.</span></h2>
+        </div>
+        <div class="about-grid">
+          <div class="about-copy">
+            <p>I’m studying mechanical engineering at Louisiana State University because I enjoy understanding how things work and finding ways to improve them.</p>
+            <p>My interests include mechanical design, motorsport, aerospace, manufacturing, and hands-on experimentation. As I complete real engineering work, I’ll document the process and results here.</p>
           </div>
+
+          <article class="legacy-card">
+            <img src="assets/images/norman.jpg" alt="Horace Norman Walker in military uniform" loading="lazy">
+            <div>
+              <p class="eyebrow">The story behind 51</p>
+              <h3>A legacy of curiosity</h3>
+              <p class="legacy-subtitle">Horace Norman Walker · World War II pilot</p>
+              <p>My great-grandfather, Horace Norman Walker, flew a P-51 Mustang during World War II. Although he passed away before I was born, the stories of his life sparked my interest in aircraft, speed, space exploration, mathematics, and engineering.</p>
+              <p>The number 51 is a tribute to him and a reminder of where that curiosity began.</p>
+            </div>
+          </article>
         </div>
-      </main>
+      </div>
+    </section>
+
+    <section class="section container" id="skills">
+      <div class="section-heading">
+        <p class="eyebrow">Technical background</p>
+        <h2>Skills & interests<span>.</span></h2>
+      </div>
+      <div class="skills-grid">
+        <article class="skill-card"><h3>Mechanical design</h3><p>Autodesk Fusion, CAD modeling, assemblies, and technical drawings.</p></article>
+        <article class="skill-card"><h3>Prototyping</h3><p>FDM 3D printing, component design, and iterative development.</p></article>
+        <article class="skill-card"><h3>Problem solving</h3><p>Hardware assembly, troubleshooting, and hands-on experimentation.</p></article>
+        <article class="skill-card"><h3>Engineering interests</h3><p>Aerodynamics, motorsport, aerospace, testing, and emerging technology.</p></article>
+      </div>
+    </section>
+
+    <!-- This entire section stays hidden while projects.js contains no projects. -->
+    <section class="section section-tinted" id="projects" hidden>
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Engineering work</p>
+          <h2>Selected projects<span>.</span></h2>
+          <p>Completed work, design decisions, and results.</p>
+        </div>
+        <div class="project-grid" id="project-grid"></div>
+      </div>
+    </section>
+
+    <section class="section contact-section" id="contact">
+      <div class="container contact-content">
+        <p class="eyebrow">Let’s connect</p>
+        <h2>Open to opportunities<span>.</span></h2>
+        <p>I’m interested in engineering internships and opportunities to learn, contribute, and gain hands-on experience.</p>
+        <div class="button-row">
+          <a class="button button-primary" href="https://github.com/JTB51" target="_blank" rel="noopener noreferrer">GitHub profile</a>
+          <!-- RESUME LATER: add assets/documents/JT-Burgoyne-Resume.pdf, then remove hidden below. -->
+          <a class="button button-secondary" href="assets/documents/JT-Burgoyne-Resume.pdf" hidden>View résumé</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> JT Burgoyne</p>
+      <a href="#about">The story behind 51</a>
     </div>
-  </body>
+  </footer>
+</body>
 </html>
